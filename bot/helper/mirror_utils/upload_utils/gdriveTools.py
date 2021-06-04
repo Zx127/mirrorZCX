@@ -331,10 +331,13 @@ class GoogleDriveHelper:
             if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
                 dir_id = self.create_directory(meta.get('name'), parent_id)
                 result = self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id)
-                msg += f'<b>Filename: </b><code>{meta.get("name")}</code>\n<b>Size: </b><code>{get_readable_file_size(self.transferred_size)}</code>'
+                msg += f'<b>GDrive link:</b> <a href="{self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)}">{meta.get("name")}</a>' \
+                       f' <b>({get_readable_file_size(self.transferred_size)})</b>'
+                ## msg += f'<b>Filename: </b><code>{meta.get("name")}</code>\n<b>Size: </b><code>{get_readable_file_size(self.transferred_size)}</code>'
                 msg += f'\n\n<b>Type: </b>Folder'
                 msg += f'\n<b>SubFolders: </b>{self.total_folders}'
                 msg += f'\n<b>Files: </b>{self.total_files}'
+                """
                 durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
                 buttons = button_build.ButtonMaker()
                 if SHORTENER is not None and SHORTENER_API is not None:
@@ -342,9 +345,12 @@ class GoogleDriveHelper:
                     buttons.buildbutton("☁️Drive Link☁️", surl)
                 else:
                     buttons.buildbutton("☁️Drive Link☁️", durl)
+                """
                 if INDEX_URL is not None:
                     url_path = requests.utils.quote(f'{meta.get("name")}')
                     url = f'{INDEX_URL}/{url_path}/'
+                    msg += f' | <a href="{url}"> Index URL</a>'
+                    """
                     if SHORTENER is not None and SHORTENER_API is not None:
                         siurl = requests.get('https://{}/api?api={}&url={}&format=text'.format(SHORTENER, SHORTENER_API, url)).text
                         buttons.buildbutton("⚡Index Link⚡", siurl)
@@ -356,8 +362,11 @@ class GoogleDriveHelper:
                     buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
                 if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
                     buttons.buildbutton(f"{BUTTON_FIVE_NAME}", f"{BUTTON_FIVE_URL}")
+                    """
             else:
                 file = self.copyFile(meta.get('id'), parent_id)
+                msg += f'<b>GDrive link:</b> <a href="{self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))}">{file.get("name")}</a>'
+                """
                 msg += f'<b>Filename: </b><code>{file.get("name")}</code>'
                 durl = self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))
                 buttons = button_build.ButtonMaker()
@@ -366,18 +375,22 @@ class GoogleDriveHelper:
                     buttons.buildbutton("☁️Drive Link☁️", surl)
                 else:
                     buttons.buildbutton("☁️Drive Link☁️", durl)
+                """
                 try:
                     typeee = file.get('mimeType')
                 except:
                     typeee = 'File' 
                 try:
-                    msg += f'\n<b>Size: </b><code>{get_readable_file_size(int(meta.get("size")))}</code>'
+                    msg += f' <b>({get_readable_file_size(int(meta.get("size")))})</b> '
+                    ## msg += f'\n<b>Size: </b><code>{get_readable_file_size(int(meta.get("size")))}</code>'
                     msg += f'\n\n<b>Type: </b>{typeee}'
                 except TypeError:
                     pass
                 if INDEX_URL is not None:
                     url_path = requests.utils.quote(f'{file.get("name")}')
                     url = f'{INDEX_URL}/{url_path}'
+                    msg += f' | <a href="{url}"> Index URL</a>'
+                    """
                     if SHORTENER is not None and SHORTENER_API is not None:
                         siurl = requests.get('https://{}/api?api={}&url={}&format=text'.format(SHORTENER, SHORTENER_API, url)).text
                         buttons.buildbutton("⚡Index Link⚡", siurl)
@@ -389,6 +402,7 @@ class GoogleDriveHelper:
                     buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
                 if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
                     buttons.buildbutton(f"{BUTTON_FIVE_NAME}", f"{BUTTON_FIVE_URL}")
+                    """
         except Exception as err:
             if isinstance(err, RetryError):
                 LOGGER.info(f"Total Attempts: {err.last_attempt.attempt_number}")
@@ -396,7 +410,8 @@ class GoogleDriveHelper:
             err = str(err).replace('>', '').replace('<', '')
             LOGGER.error(err)
             return err, ""
-        return msg, InlineKeyboardMarkup(buttons.build_menu(2))
+        return msg
+        ## return msg, InlineKeyboardMarkup(buttons.build_menu(2))
 
     def cloneFolder(self, name, local_path, folder_id, parent_id):
         LOGGER.info(f"Syncing: {local_path}")

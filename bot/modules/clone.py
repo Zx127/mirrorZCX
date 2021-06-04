@@ -15,17 +15,21 @@ def cloneNode(update, context):
     else:
         uname = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}</a>'
     if uname is not None:
-            cc = f'\n\ncc: {uname}'
+            cc = f'\n\n<i>Files in Shared Drive can only be shared with members of the drive.</i>\ncc: {uname}'
     if len(args) > 1:
         link = args[1]
         msg = sendMessage(f"Cloning: <code>{link}</code>", context.bot, update)
         gd = GoogleDriveHelper()
+        result = gd.clone(link)
+        sendMessage(result + cc,context.bot,update)
+        """
         result, button = gd.clone(link)
         deleteMessage(context.bot,msg)
         if button == "":
             sendMessage(result, context.bot, update)
         else:
             sendMarkup(result + cc, context.bot, update, button)
+        """
     else:
         sendMessage("Provide G-Drive Shareable Link to Clone.", context.bot, update)
 
