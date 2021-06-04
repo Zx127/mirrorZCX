@@ -21,7 +21,7 @@ class _BotCommands:
         self.SpeedCommand = 'speedtest'
         self.CloneCommand = 'c'
         self.CountCommand = 'cnt'
-        self.WatchCommand = 'wa'
+        self.WatchCommand = 'w'
         self.TarWatchCommand = 'tw'
         self.DeleteCommand = 'd'
         self.UsageCommand = 'usage'
