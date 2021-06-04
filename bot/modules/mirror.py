@@ -164,11 +164,11 @@ class MirrorListener(listeners.MirrorListeners):
                 share_url = f'{INDEX_URL}/{url_path}'
                 if os.path.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{download_dict[self.uid].name()}'):
                     share_url += '/'
-                    msg += '\n\n<b>Type: </b>Folder'
+                    msg += '\n<b>Type: </b>Folder'
                     msg += f'\n<b>SubFolders: </b>{folders}'
                     msg += f'\n<b>Files: </b>{files}'
                 else:
-                    msg += f'\n\n<b>Type: </b>{typ}'
+                    msg += f'\n<b>Type: </b>{typ}'
                     msg += f'\n\nShareable link: <a href="{share_url}">here</a>'
             """
                 if SHORTENER is not None and SHORTENER_API is not None:

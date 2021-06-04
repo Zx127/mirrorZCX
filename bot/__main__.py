@@ -53,7 +53,7 @@ def stats(update, context):
 def start(update, context):
     start_string = f'''
 𝐌𝐢𝐫𝐫𝐨𝐫𝐙𝐗 can mirror all your links to Google Drive!
-Type /{BotCommands.HelpCommand} to get a list of available commands
+Type /{BotCommands.HelpCommand} to get a list of available commands.
 '''
     """
     buttons = button_build.ButtonMaker()
