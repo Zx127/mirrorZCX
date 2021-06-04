@@ -39,34 +39,36 @@ def stats(update, context):
     stats = f'<b>Bot Uptime:</b> {currentTime}\n' \
             f'<b>Start Time:</b> {current}\n' \
             f'<b>Total Disk Space:</b> {total}\n' \
-            f'<b>Used:</b> {used}  ' \
+            f'<b>Used:</b> {used} | ' \
             f'<b>Free:</b> {free}\n\n' \
-            f'📊Data Usage📊\n<b>Upload:</b> {sent}\n' \
-            f'<b>Download:</b> {recv}\n\n' \
-            f'<b>CPU:</b> {cpuUsage}%\n' \
-            f'<b>RAM:</b> {memory}%\n' \
-            f'<b>DISK:</b> {disk}%'
+            f'<b>Data Usage</b>\n    • Upload: {sent}\n' \
+            f'    • Download: {recv}\n\n' \
+            f'<b>CPU:</b> {cpuUsage}%' \
+            f' | <b>RAM:</b> {memory}%' \
+            f' | <b>DISK:</b> {disk}%'
     update.effective_message.reply_photo(IMAGE_URL, stats, parse_mode=ParseMode.HTML)
 
 
 @run_async
 def start(update, context):
     start_string = f'''
-This bot can mirror all your links to Google Drive!
+𝐌𝐢𝐫𝐫𝐨𝐫𝐙𝐗 can mirror all your links to Google Drive!
 Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
+    """
     buttons = button_build.ButtonMaker()
     buttons.buildbutton("Repo", "https://github.com/breakdowns/slam-mirrorbot")
     buttons.buildbutton("Support Group", "https://t.me/SlamMirrorSupport")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
+    """
     LOGGER.info('UID: {} - UN: {} - MSG: {}'.format(update.message.chat.id, update.message.chat.username, update.message.text))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         if update.message.chat.type == "private" :
             sendMessage(f"Hey I'm Alive 🙂", context.bot, update)
         else :
-            update.effective_message.reply_photo(IMAGE_URL, start_string, parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup)
+            update.effective_message.reply_photo(IMAGE_URL, start_string, parse_mode=ParseMode.MARKDOWN)
     else :
-        sendMessage(f"Oops! not a Authorized user.", context.bot, update)
+        sendMessage(f"You aren't authorized to use this bot here.", context.bot, update)
 
 
 @run_async
