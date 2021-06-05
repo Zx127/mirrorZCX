@@ -149,6 +149,11 @@ class MirrorListener(listeners.MirrorListeners):
     def onUploadComplete(self, link: str, size, files, folders, typ):
         with download_dict_lock:
             msg = f'\n<b>GDrive link:</b> <a href="{link}">{download_dict[self.uid].name()}</a> <b>({download_dict[self.uid].size()})</b>'
+                msg += '\n\n<b>Type: </b>Folder'
+                msg += f'\n<b>SubFolders: </b>{folders}'
+                msg += f'\n<b>Files: </b>{files}'
+            else:
+                msg += f'\n\n<b>Type: </b>{typ}'
             """
             msg = f'<b>Filename: </b><code>{download_dict[self.uid].name()}</code>\n<b>Size: </b><code>{size}</code>'
             buttons = button_build.ButtonMaker()
