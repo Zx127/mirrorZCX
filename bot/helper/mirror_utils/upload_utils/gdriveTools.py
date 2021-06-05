@@ -334,9 +334,9 @@ class GoogleDriveHelper:
                 msg += f'\n<b>GDrive link:</b> <a href="{self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)}">{meta.get("name")}</a>' \
                        f' <b>({get_readable_file_size(self.transferred_size)})</b>'
                 ## msg += f'<b>Filename: </b><code>{meta.get("name")}</code>\n<b>Size: </b><code>{get_readable_file_size(self.transferred_size)}</code>'
-                msg += f'\n<b>Type: </b>Folder'
-                msg += f'\n<b>SubFolders: </b>{self.total_folders}'
-                msg += f'\n<b>Files: </b>{self.total_files}'
+                msg += f'\n • <b>Type: </b>Folder'
+                msg += f'\n • <b>SubFolders: </b>{self.total_folders}'
+                msg += f'\n • <b>Files: </b>{self.total_files}'
                 """
                 durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
                 buttons = button_build.ButtonMaker()
@@ -383,7 +383,7 @@ class GoogleDriveHelper:
                 try:
                     msg += f' <b>({get_readable_file_size(int(meta.get("size")))})</b> '
                     ## msg += f'\n<b>Size: </b><code>{get_readable_file_size(int(meta.get("size")))}</code>'
-                    msg += f'\n<b>Type: </b>{typeee}'
+                    msg += f'\n • <b>Type: </b>{typeee}'
                 except TypeError:
                     pass
                 if INDEX_URL is not None:
@@ -639,10 +639,10 @@ class GoogleDriveHelper:
             if drive_file['mimeType'] == self.__G_DRIVE_DIR_MIME_TYPE:
                 self.gDrive_directory(**drive_file)
                 msg += f'<b>Filename: </b><code>{name}</code>'
-                msg += f'\n<b>Size: </b>{get_readable_file_size(self.total_bytes)}'
-                msg += f'\n<b>Type: </b>Folder'
-                msg += f'\n<b>SubFolders: </b>{self.total_folders}'
-                msg += f'\n<b>Files: </b>{self.total_files}'
+                msg += f'\n • <b>Size: </b>{get_readable_file_size(self.total_bytes)}'
+                msg += f'\n • <b>Type: </b>Folder'
+                msg += f'\n • <b>SubFolders: </b>{self.total_folders}'
+                msg += f'\n • <b>Files: </b>{self.total_files}'
             else:
                 msg += f'<b>Filename: </b><code>{name}</code>'
                 try:
@@ -652,9 +652,9 @@ class GoogleDriveHelper:
                 try:
                     self.total_files += 1
                     self.gDrive_file(**drive_file)
-                    msg += f'\n<b>Size: </b><code>{get_readable_file_size(self.total_bytes)}</code>'
-                    msg += f'\n<b>Type: </b>{typee}'
-                    msg += f'\n<b>Files: </b>{self.total_files}'
+                    msg += f'\n • <b>Size: </b><code>{get_readable_file_size(self.total_bytes)}</code>'
+                    msg += f'\n • <b>Type: </b>{typee}'
+                    msg += f'\n • <b>Files: </b>{self.total_files}'
                 except TypeError:
                     pass
         except Exception as err:
