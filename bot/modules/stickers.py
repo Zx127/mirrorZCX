@@ -52,7 +52,7 @@ def kang(update: Update, context: CallbackContext):
     msg = update.effective_message
     user = update.effective_user
     args = context.args
-    packnum = 0
+    packnum = 1
     packname = "a" + str(user.id) + "_by_" + context.bot.username
     packname_found = 0
     max_stickers = 120
@@ -315,7 +315,7 @@ def kang(update: Update, context: CallbackContext):
         packs = "Please reply to a sticker, or image to kang it!\nOh, by the way. here are your packs:\n"
         if packnum > 0:
             firstpackname = "a" + str(user.id) + "_by_" + context.bot.username
-            for i in range(0, packnum + 1):
+            for i in range(1, packnum + 1):
                 if i == 0:
                     packs += f"[pack](t.me/addstickers/{firstpackname})\n"
                 else:
@@ -340,8 +340,8 @@ def makepack_internal(
     png_sticker=None,
     tgs_sticker=None,
 ):
-    name = user.first_name
-    name = name[:50]
+    name = user.username
+    ## name = name[:50]
     try:
         extra_version = ""
         if packnum > 0:
@@ -350,7 +350,7 @@ def makepack_internal(
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
-                f"{name}s kang pack" + extra_version,
+                f"{name}'s kang pack" + extra_version,
                 png_sticker=png_sticker,
                 emojis=emoji,
             )
