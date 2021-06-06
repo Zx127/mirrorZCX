@@ -53,7 +53,7 @@ def kang(update: Update, context: CallbackContext):
     user = update.effective_user
     args = context.args
     packnum = 1
-    packname = "a" + str(user.id) + "_by_" + context.bot.username
+    packname = "Kang pack Vol." + str(packnum), + " by " + context.bot.username
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -61,8 +61,7 @@ def kang(update: Update, context: CallbackContext):
             stickerset = context.bot.get_sticker_set(packname)
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
-                packname = ("a" + str(packnum) + "_" + str(user.id) + "_by_" +
-                            context.bot.username)
+                packname = "Kang pack Vol." + str(packnum), + " by " + context.bot.username)
             else:
                 packname_found = 1
         except TelegramError as e:
@@ -178,7 +177,7 @@ def kang(update: Update, context: CallbackContext):
                 print(e)
 
         else:
-            packname = "animated" + str(user.id) + "_by_" + context.bot.username
+            packname = "Animated kang pack Vol." +str(packnum) + " by " + context.bot.username
             packname_found = 0
             max_stickers = 50
             while packname_found == 0:
@@ -186,9 +185,7 @@ def kang(update: Update, context: CallbackContext):
                     stickerset = context.bot.get_sticker_set(packname)
                     if len(stickerset.stickers) >= max_stickers:
                         packnum += 1
-                        packname = ("animated" + str(packnum) + "_" +
-                                    str(user.id) + "_by_" +
-                                    context.bot.username)
+                        packname = ("Animated kang pack Vol." +str(packnum) + " by " + context.bot.username)
                     else:
                         packname_found = 1
                 except TelegramError as e:
@@ -314,7 +311,7 @@ def kang(update: Update, context: CallbackContext):
     else:
         packs = "Please reply to a sticker, or image to kang it!\nOh, by the way. here are your packs:\n"
         if packnum > 0:
-            firstpackname = "a" + str(user.id) + "_by_" + context.bot.username
+            firstpackname = "Kang pack Vol." +str(packnum) + " by " + context.bot.username
             for i in range(1, packnum + 1):
                 if i == 0:
                     packs += f"[pack](t.me/addstickers/{firstpackname})\n"
@@ -340,17 +337,17 @@ def makepack_internal(
     png_sticker=None,
     tgs_sticker=None,
 ):
-    name = user.first_name
-    name = name[:50]
+    name = user.username
+    ## name = name[:50]
     try:
         extra_version = ""
         if packnum > 0:
-            extra_version = " " + str(packnum)
+            extra_version = " Vol." + str(packnum)
         if png_sticker:
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
-                f"{name}'s kang pack" + extra_version,
+                f"@{name}'s kang pack" + extra_version,
                 png_sticker=png_sticker,
                 emojis=emoji,
             )
@@ -358,7 +355,7 @@ def makepack_internal(
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
-                f"{name}'s animated kang pack" + extra_version,
+                f"@{name}'s animated kang pack" + extra_version,
                 tgs_sticker=tgs_sticker,
                 emojis=emoji,
             )
