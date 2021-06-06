@@ -53,7 +53,7 @@ def kang(update: Update, context: CallbackContext):
     user = update.effective_user
     args = context.args
     packnum = 1
-    packname = "Kang pack Vol." + str(packnum), + " by " + context.bot.username
+    packname = "a" + str(user.id) + "_by_" + context.bot.username
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -61,7 +61,8 @@ def kang(update: Update, context: CallbackContext):
             stickerset = context.bot.get_sticker_set(packname)
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
-                packname = "Kang pack Vol." + str(packnum), + " by " + context.bot.username)
+                packname = ("a" + str(packnum) + "_" + str(user.id) + "_by_" +
+                            context.bot.username)
             else:
                 packname_found = 1
         except TelegramError as e:
@@ -177,7 +178,7 @@ def kang(update: Update, context: CallbackContext):
                 print(e)
 
         else:
-            packname = "Animated kang pack Vol." +str(packnum) + " by " + context.bot.username
+            packname = "animated" + str(user.id) + "_by_" + context.bot.username
             packname_found = 0
             max_stickers = 50
             while packname_found == 0:
@@ -185,7 +186,9 @@ def kang(update: Update, context: CallbackContext):
                     stickerset = context.bot.get_sticker_set(packname)
                     if len(stickerset.stickers) >= max_stickers:
                         packnum += 1
-                        packname = ("Animated kang pack Vol." +str(packnum) + " by " + context.bot.username)
+                        packname = ("animated" + str(packnum) + "_" +
+                                    str(user.id) + "_by_" +
+                                    context.bot.username)
                     else:
                         packname_found = 1
                 except TelegramError as e:
@@ -311,7 +314,7 @@ def kang(update: Update, context: CallbackContext):
     else:
         packs = "Please reply to a sticker, or image to kang it!\nOh, by the way. here are your packs:\n"
         if packnum > 0:
-            firstpackname = "Kang pack Vol." +str(packnum) + " by " + context.bot.username
+            firstpackname = "a" + str(user.id) + "_by_" + context.bot.username
             for i in range(1, packnum + 1):
                 if i == 0:
                     packs += f"[pack](t.me/addstickers/{firstpackname})\n"
